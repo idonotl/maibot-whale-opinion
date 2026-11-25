@@ -1,0 +1,189 @@
+{
+  "schema_version": 2,
+  "required_capabilities": [
+    "declarative_basic"
+  ],
+  "workspace_title": "小鲸鱼观点与讨论",
+  "pages": [
+    {
+      "id": "overview",
+      "title": "讨论状态",
+      "description": "当前启用范围、讨论话题、立场与错误统计；数据来自插件 SQLite，不含消息原文。",
+      "placement": "workspace",
+      "icon": "list",
+      "mode": "declarative",
+      "poll_interval_seconds": 0,
+      "queries": {
+        "overview": {
+          "api": "overview",
+          "version": "1"
+        },
+        "topics": {
+          "api": "topics",
+          "version": "1"
+        },
+        "audit": {
+          "api": "audit",
+          "version": "1"
+        }
+      },
+      "content": [
+        {
+          "type": "grid",
+          "label": "运行状态",
+          "columns": 4,
+          "children": [
+            {
+              "type": "stat",
+              "label": "启用",
+              "value": {
+                "scope": "query",
+                "source": "overview",
+                "field": "enabled"
+              },
+              "when": {
+                "reference": {
+                  "scope": "query",
+                  "source": "overview",
+                  "field": "ok"
+                }
+              }
+            },
+            {
+              "type": "stat",
+              "label": "试运行",
+              "value": {
+                "scope": "query",
+                "source": "overview",
+                "field": "shadow_mode"
+              },
+              "when": {
+                "reference": {
+                  "scope": "query",
+                  "source": "overview",
+                  "field": "ok"
+                }
+              }
+            },
+            {
+              "type": "stat",
+              "label": "话题数",
+              "value": {
+                "scope": "query",
+                "source": "overview",
+                "field": "db.topics"
+              },
+              "when": {
+                "reference": {
+                  "scope": "query",
+                  "source": "overview",
+                  "field": "ok"
+                }
+              }
+            },
+            {
+              "type": "stat",
+              "label": "模型调用",
+              "value": {
+                "scope": "query",
+                "source": "overview",
+                "field": "db.model_calls"
+              },
+              "when": {
+                "reference": {
+                  "scope": "query",
+                  "source": "overview",
+                  "field": "ok"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "table",
+          "label": "最近话题",
+          "value": {
+            "scope": "query",
+            "source": "topics",
+            "field": "items"
+          },
+          "columns": [
+            {
+              "field": "topic_key",
+              "label": "话题"
+            },
+            {
+              "field": "stance",
+              "label": "立场"
+            },
+            {
+              "field": "state",
+              "label": "状态"
+            },
+            {
+              "field": "evidence",
+              "label": "证据"
+            },
+            {
+              "field": "position",
+              "label": "候选说法"
+            },
+            {
+              "field": "explained",
+              "label": "已发送"
+            }
+          ],
+          "when": {
+            "reference": {
+              "scope": "query",
+              "source": "topics",
+              "field": "ok"
+            }
+          }
+        },
+        {
+          "type": "table",
+          "label": "最近动作",
+          "value": {
+            "scope": "query",
+            "source": "audit",
+            "field": "items"
+          },
+          "columns": [
+            {
+              "field": "time",
+              "label": "时间"
+            },
+            {
+              "field": "topic",
+              "label": "话题"
+            },
+            {
+              "field": "action",
+              "label": "动作"
+            },
+            {
+              "field": "reason",
+              "label": "原因"
+            },
+            {
+              "field": "calls",
+              "label": "模型调用"
+            },
+            {
+              "field": "error",
+              "label": "错误"
+            }
+          ],
+          "when": {
+            "reference": {
+              "scope": "query",
+              "source": "audit",
+              "field": "ok"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

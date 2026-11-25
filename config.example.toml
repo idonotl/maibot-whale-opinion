@@ -1,0 +1,24 @@
+[plugin]
+config_version = "0.1.0"
+enabled = false
+shadow_mode = true
+bot_account_id = ""
+private_user_ids = []
+group_ids = []
+webui_test_prefix = ""
+enable_web_evidence = false
+search_per_turn_max = 2
+read_per_turn_max = 2
+analysis_output_tokens_max = 800
+analysis_task = "utils"
+analysis_timeout_seconds = 120.0
+analysis_min_interval_seconds = 20
+default_criteria = ["稳定性", "关键决策", "团队贡献", "精彩操作"]
+discussion_review_after_turns = 3
+no_new_information_limit = 2
+repeat_window_turns = 2
+topic_active_ttl_hours = 24
+closed_topic_retention_days = 7
+audit_retention_days = 14
+evidence_retention_days = 3
+max_prompt_chars = 900
